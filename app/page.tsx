@@ -14,7 +14,7 @@ import SubjectRow from "@/components/SubjectRow";
 import ResultModal from "@/components/ResultModal";
 import { Subject, calculateGWA, getDistinction } from "@/lib/gwa";
 
-const SEMESTERS = ["1st Semester", "2nd Semester"];
+const SEMESTERS = ["1st Sem", "2nd Sem"];
 const SCHOOL_YEARS = [
   "2021–2022",
   "2022–2023",

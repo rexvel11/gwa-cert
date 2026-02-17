@@ -290,8 +290,10 @@ export default function AboutPage() {
             }}
           >
             Developed by{" "}
-            <span style={{ color: "#fff", fontWeight: 800 }}>pagodnapogi</span>.
-            Built with Next.js 14 App Router, TypeScript, and TailwindCSS.
+            <span style={{ color: "#fff", fontWeight: 800 }}>
+              secret no clue
+            </span>
+            . Built with Next.js 14 App Router, TypeScript, and TailwindCSS.
           </p>
         </div>
       </div>
