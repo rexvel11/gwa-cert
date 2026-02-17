@@ -1,0 +1,383 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── TOKENS ─── */
+:root {
+  --maroon: #7b1113;
+  --maroon-deep: #560c0e;
+  --maroon-light: #9b1a1c;
+  --gold: #d4af37;
+  --gold-light: #f0d060;
+  --gold-dim: #a8892a;
+  --radius-card: 28px;
+  --radius-input: 16px;
+}
+
+/* ─── BASE ─── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #120a0b;
+  background-image:
+    radial-gradient(
+      ellipse 70% 55% at 15% 0%,
+      rgba(123, 17, 19, 0.55) 0%,
+      transparent 65%
+    ),
+    radial-gradient(
+      ellipse 50% 45% at 88% 8%,
+      rgba(212, 175, 55, 0.11) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 60% 50% at 85% 95%,
+      rgba(123, 17, 19, 0.35) 0%,
+      transparent 65%
+    ),
+    radial-gradient(
+      ellipse 45% 40% at 5% 90%,
+      rgba(80, 10, 12, 0.4) 0%,
+      transparent 60%
+    );
+  background-attachment: fixed;
+  min-height: 100dvh;
+  color: #fff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family:
+    "Plus Jakarta Sans",
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+}
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(123, 17, 19, 0.5);
+  border-radius: 99px;
+}
+
+/* ─── SPINNER HIDE ─── */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* ─── SELECT OPTIONS ─── */
+select option {
+  background: #1c0d0e;
+  color: #fff;
+}
+
+/* ─────────────────────────────────────────
+   GLASS CARD — rounder, more elevated
+───────────────────────────────────────── */
+.glass-card {
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.11) 0%,
+    rgba(255, 255, 255, 0.05) 55%,
+    rgba(255, 255, 255, 0.09) 100%
+  );
+  backdrop-filter: blur(28px) saturate(170%);
+  -webkit-backdrop-filter: blur(28px) saturate(170%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-top-color: rgba(255, 255, 255, 0.24);
+  border-radius: var(--radius-card);
+  box-shadow:
+    0 2px 0 rgba(255, 255, 255, 0.07) inset,
+    0 -1px 0 rgba(0, 0, 0, 0.22) inset,
+    0 10px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* ─────────────────────────────────────────
+   GLASS INPUT — rounded pill style
+───────────────────────────────────────── */
+.glass-input {
+  display: block;
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #fff;
+  font-family: inherit;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.09) 0%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-top-color: rgba(255, 255, 255, 0.22);
+  border-radius: var(--radius-input);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.06) inset,
+    0 2px 8px rgba(0, 0, 0, 0.2);
+}
+.glass-input::placeholder {
+  color: rgba(255, 255, 255, 0.28);
+  font-weight: 400;
+}
+.glass-input:focus {
+  border-color: rgba(212, 175, 55, 0.6);
+  border-top-color: rgba(212, 175, 55, 0.8);
+  box-shadow:
+    0 0 0 3px rgba(212, 175, 55, 0.12),
+    0 1px 0 rgba(255, 255, 255, 0.08) inset;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(255, 255, 255, 0.07) 100%
+  );
+}
+.glass-input:hover:not(:focus) {
+  border-color: rgba(255, 255, 255, 0.22);
+  border-top-color: rgba(255, 255, 255, 0.32);
+}
+
+/* ─────────────────────────────────────────
+   GLASS SELECT — same as input + custom arrow
+───────────────────────────────────────── */
+.glass-select {
+  display: block;
+  width: 100%;
+  padding: 12px 40px 12px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #fff;
+  font-family: inherit;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.09) 0%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-top-color: rgba(255, 255, 255, 0.22);
+  border-radius: var(--radius-input);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.06) inset,
+    0 2px 8px rgba(0, 0, 0, 0.2);
+}
+.glass-select:focus,
+.glass-select:hover {
+  border-color: rgba(212, 175, 55, 0.55);
+  border-top-color: rgba(212, 175, 55, 0.75);
+  box-shadow:
+    0 0 0 3px rgba(212, 175, 55, 0.1),
+    0 1px 0 rgba(255, 255, 255, 0.08) inset;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(255, 255, 255, 0.07) 100%
+  );
+  outline: none;
+}
+
+/* ─────────────────────────────────────────
+   NAV GLASS
+───────────────────────────────────────── */
+.glass-nav {
+  background: linear-gradient(
+    135deg,
+    rgba(123, 17, 19, 0.72) 0%,
+    rgba(80, 12, 14, 0.6) 100%
+  );
+  backdrop-filter: blur(32px) saturate(180%);
+  -webkit-backdrop-filter: blur(32px) saturate(180%);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.07) inset,
+    0 6px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* ─────────────────────────────────────────
+   MAROON BUTTON
+───────────────────────────────────────── */
+.btn-maroon {
+  background: linear-gradient(135deg, #9b1a1c 0%, #560c0e 100%);
+  border: 1px solid rgba(212, 175, 55, 0.28);
+  box-shadow:
+    0 6px 28px rgba(123, 17, 19, 0.55),
+    0 1px 0 rgba(255, 255, 255, 0.14) inset;
+  color: #fff;
+  font-weight: 700;
+  font-family: inherit;
+  border-radius: 18px;
+  transition: all 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+  cursor: pointer;
+}
+.btn-maroon:hover {
+  background: linear-gradient(135deg, #b52022 0%, #6e1012 100%);
+  box-shadow:
+    0 10px 40px rgba(123, 17, 19, 0.75),
+    0 1px 0 rgba(255, 255, 255, 0.2) inset;
+  transform: translateY(-2px) scale(1.01);
+}
+.btn-maroon:active {
+  transform: translateY(0) scale(0.99);
+  box-shadow: 0 3px 12px rgba(123, 17, 19, 0.45);
+}
+.btn-maroon:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ─────────────────────────────────────────
+   GOLD SHIMMER TEXT
+───────────────────────────────────────── */
+.text-gold-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--gold-dim) 0%,
+    var(--gold-light) 35%,
+    var(--gold) 50%,
+    var(--gold-light) 65%,
+    var(--gold-dim) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3.5s linear infinite;
+}
+
+/* ─────────────────────────────────────────
+   KEYFRAMES
+───────────────────────────────────────── */
+@keyframes shimmer {
+  from {
+    background-position: -200% center;
+  }
+  to {
+    background-position: 200% center;
+  }
+}
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+@keyframes pulse-ring {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.22);
+  }
+}
+@keyframes orb {
+  0%,
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(30px, -20px) scale(1.06);
+  }
+  66% {
+    transform: translate(-15px, 15px) scale(0.96);
+  }
+}
+
+/* ─── ANIMATION CLASSES ─── */
+.anim-fade-up {
+  animation: fadeUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.anim-fade-in {
+  animation: fadeIn 0.4s ease both;
+}
+.anim-scale-in {
+  animation: scaleIn 0.38s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.anim-float {
+  animation: float 4.5s ease-in-out infinite;
+}
+.anim-orb {
+  animation: orb 14s ease-in-out infinite;
+}
+
+.d-1 {
+  animation-delay: 0.08s;
+}
+.d-2 {
+  animation-delay: 0.16s;
+}
+.d-3 {
+  animation-delay: 0.24s;
+}
+.d-4 {
+  animation-delay: 0.32s;
+}
+.d-5 {
+  animation-delay: 0.4s;
+}
