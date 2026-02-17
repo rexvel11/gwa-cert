@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useRef, useCallback } from "react";
 import { X, Download, Trophy, Star, Sparkles, AlertCircle } from "lucide-react";
 import { AcademicDistinction } from "@/lib/gwa";
 import Certificate from "./Certificate";
@@ -26,11 +26,13 @@ export default function ResultModal({
   const [loading, setLoading] = useState(false);
   const certRef = useRef<HTMLDivElement>(null);
 
-  if (!isOpen) return null;
+  // ── ALL hooks must be declared BEFORE any early return ──────────────────
+  const handleClose = useCallback(() => {
+    setName("");
+    onClose();
+  }, [onClose]);
 
-  const isPL = distinction === "PRESIDENT'S LISTER";
-
-  const handleDownload = async () => {
+  const handleDownload = useCallback(async () => {
     if (!name.trim()) {
       alert("Please enter your full name first.");
       return;
@@ -38,6 +40,7 @@ export default function ResultModal({
     if (!distinction) return;
     setLoading(true);
     setShowCert(true);
+
     setTimeout(async () => {
       try {
         const { toPng } = await import("html-to-image");
@@ -51,15 +54,23 @@ export default function ResultModal({
       } finally {
         setShowCert(false);
         setLoading(false);
+        setTimeout(() => {
+          handleClose();
+        }, 400);
       }
-    }, 350);
-  };
+    }, 400);
+  }, [name, distinction, handleClose]);
+
+  // ── Early return AFTER all hooks ─────────────────────────────────────────
+  if (!isOpen) return null;
+
+  const isPL = distinction === "PRESIDENT'S LISTER";
 
   return (
     <>
       {/* Backdrop */}
       <div
-        onClick={(e) => e.target === e.currentTarget && onClose()}
+        onClick={(e) => e.target === e.currentTarget && handleClose()}
         style={{
           position: "fixed",
           inset: 0,
@@ -68,7 +79,7 @@ export default function ResultModal({
           alignItems: "center",
           justifyContent: "center",
           padding: "16px",
-          background: "rgba(0,0,0,0.80)",
+          background: "rgba(0,0,0,0.82)",
           backdropFilter: "blur(16px)",
           WebkitBackdropFilter: "blur(16px)",
         }}
@@ -91,7 +102,7 @@ export default function ResultModal({
               "0 40px 100px rgba(0,0,0,0.75), inset 0 1px 0 rgba(255,255,255,0.10)",
           }}
         >
-          {/* Header */}
+          {/* ── Header ── */}
           <div
             style={{
               position: "relative",
@@ -104,7 +115,6 @@ export default function ResultModal({
               borderBottom: "1px solid rgba(212,175,55,0.20)",
             }}
           >
-            {/* Top shimmer line */}
             <div
               style={{
                 position: "absolute",
@@ -113,10 +123,9 @@ export default function ResultModal({
                 right: 0,
                 height: "1px",
                 background:
-                  "linear-gradient(90deg, transparent 0%, rgba(212,175,55,0.60) 50%, transparent 100%)",
+                  "linear-gradient(90deg, transparent, rgba(212,175,55,0.60), transparent)",
               }}
             />
-
             <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
               <div
                 style={{
@@ -158,8 +167,10 @@ export default function ResultModal({
               </div>
             </div>
 
+            {/* Close button */}
             <button
-              onClick={onClose}
+              onClick={handleClose}
+              title="Close and reset"
               style={{
                 width: "30px",
                 height: "30px",
@@ -186,7 +197,7 @@ export default function ResultModal({
             </button>
           </div>
 
-          {/* Body */}
+          {/* ── Body ── */}
           <div style={{ padding: "30px 26px" }}>
             {/* GWA display */}
             <div style={{ textAlign: "center", marginBottom: "22px" }}>
@@ -217,7 +228,7 @@ export default function ResultModal({
 
             {distinction ? (
               <>
-                {/* Distinction badge */}
+                {/* Badge */}
                 <div
                   style={{
                     display: "flex",
@@ -328,7 +339,7 @@ export default function ResultModal({
         </div>
       </div>
 
-      {/* Off-screen certificate render */}
+      {/* Off-screen certificate */}
       {showCert && distinction && (
         <div style={{ position: "fixed", top: -9999, left: -9999 }}>
           <Certificate

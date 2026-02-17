@@ -1,4 +1,4 @@
-import { ShieldCheck } from "lucide-react";
+import Image from "next/image";
 
 export default function Header() {
   return (
@@ -27,7 +27,7 @@ export default function Header() {
             animation: "pulse-ring 2.8s ease-in-out infinite",
           }}
         />
-        {/* Glass circle */}
+        {/* Glass circle with logo */}
         <div
           style={{
             position: "relative",
@@ -45,10 +45,17 @@ export default function Header() {
             borderTopColor: "rgba(212,175,55,0.60)",
             boxShadow:
               "0 12px 40px rgba(123,17,19,0.60), inset 0 1px 0 rgba(255,255,255,0.20), inset 0 -1px 0 rgba(0,0,0,0.28)",
+            overflow: "hidden",
           }}
         >
-          {/* Swap with <Image src="/logo.png" ... /> once you have the real logo */}
-          <ShieldCheck size={36} color="#D4AF37" strokeWidth={1.5} />
+          <Image
+            src="/logo.png"
+            alt="SSU Bulan Logo"
+            width={68}
+            height={68}
+            style={{ objectFit: "contain" }}
+            priority
+          />
         </div>
       </div>
 

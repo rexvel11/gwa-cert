@@ -11,6 +11,10 @@ const jakarta = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   title: "SSU-Bulan GWA Calculator",
   description: "GWA Calculator — Sorsogon State University Bulan Campus",
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+  },
 };
 
 export default function RootLayout({
@@ -21,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={jakarta.className}>
-        {/* ── Ambient background orbs (JSX-rendered, not CSS bg) ── */}
+        {/* ── Ambient background orbs ── */}
         <div
           aria-hidden
           style={{
@@ -114,11 +118,22 @@ export default function RootLayout({
               textTransform: "uppercase",
               color: "rgba(255,255,255,0.22)",
               fontWeight: 500,
+              // On desktop: normal padding. On mobile: extra bottom padding
+              // so footer clears the floating nav pill (which is ~80px tall + 20px bottom offset)
               padding: "32px 0 24px",
             }}
           >
             Developed by pagodnapogi
           </footer>
+
+          {/* Extra space on mobile so footer text isn't hidden behind the pill nav */}
+          <style>{`
+            @media (max-width: 767px) {
+              footer {
+                padding-bottom: 100px !important;
+              }
+            }
+          `}</style>
         </div>
       </body>
     </html>
