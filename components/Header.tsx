@@ -117,7 +117,7 @@ export default function Header() {
             margin: 0,
           }}
         >
-          Bored lang po hehe :3
+          not affiliated with SorSU–Bulan, for educational purposes only
         </p>
       </div>
 

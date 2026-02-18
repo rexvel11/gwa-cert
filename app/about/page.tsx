@@ -290,9 +290,9 @@ export default function AboutPage() {
           >
             Developed by{" "}
             <span style={{ color: "#fff", fontWeight: 800 }}>
-              secret no clue
+              burnt-out riks0wll
             </span>
-            . Built with Next.js 14 App Router, TypeScript, and TailwindCSS.
+            . Tech Stack: procrastinate, panic, push to GitHub.
           </p>
         </div>
       </div>

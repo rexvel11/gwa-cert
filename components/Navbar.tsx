@@ -13,103 +13,111 @@ export default function Navbar() {
 
   return (
     <>
-      {/* ── Top bar ── */}
-      <header
-        className="glass-nav"
+      {/* ── Top bar with rounded corners ── */}
+      <div
         style={{
           position: "sticky",
           top: 0,
           zIndex: 50,
           width: "100%",
+          padding: "12px 20px 0", // Add top/side padding, remove bottom
         }}
       >
-        <div
+        <header
+          className="glass-nav"
           style={{
+            borderRadius: "20px", // Rounded corners
+            overflow: "hidden",
             maxWidth: "640px",
             margin: "0 auto",
-            padding: "12px 20px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
           }}
         >
-          {/* Logo mark */}
-          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <div
-              style={{
-                width: "32px",
-                height: "32px",
-                borderRadius: "10px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                background:
-                  "linear-gradient(135deg, rgba(212,175,55,0.28) 0%, rgba(212,175,55,0.10) 100%)",
-                border: "1px solid rgba(212,175,55,0.38)",
-                boxShadow: "inset 0 1px 0 rgba(255,255,255,0.18)",
-                flexShrink: 0,
-              }}
-            >
-              <GraduationCap size={16} color="#D4AF37" strokeWidth={2} />
-            </div>
-            <span
-              style={{
-                fontSize: "14px",
-                fontWeight: 600,
-                color: "rgba(255,255,255,0.90)",
-              }}
-            >
-              SorSU–Bulan{" "}
-              <span style={{ color: "#D4AF37", fontWeight: 700 }}>GWA</span>
-            </span>
-          </div>
-
-          {/* Desktop nav links (md and up) */}
-          <nav
+          <div
             style={{
+              padding: "12px 20px",
               display: "flex",
               alignItems: "center",
-              gap: "4px",
+              justifyContent: "space-between",
             }}
-            className="desktop-nav"
           >
-            {links.map(({ href, label, Icon }) => {
-              const active = path === href;
-              return (
-                <Link
-                  key={href}
-                  href={href}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "6px",
-                    padding: "7px 16px",
-                    borderRadius: "99px",
-                    fontSize: "13px",
-                    fontWeight: 500,
-                    textDecoration: "none",
-                    transition: "all 0.2s ease",
-                    background: active
-                      ? "rgba(255,255,255,0.12)"
-                      : "transparent",
-                    color: active ? "#fff" : "rgba(255,255,255,0.50)",
-                    border: active
-                      ? "1px solid rgba(255,255,255,0.14)"
-                      : "1px solid transparent",
-                  }}
-                >
-                  <Icon
-                    size={13}
-                    color={active ? "#D4AF37" : "rgba(255,255,255,0.40)"}
-                    strokeWidth={active ? 2.5 : 2}
-                  />
-                  {label}
-                </Link>
-              );
-            })}
-          </nav>
-        </div>
-      </header>
+            {/* Logo mark */}
+            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+              <div
+                style={{
+                  width: "32px",
+                  height: "32px",
+                  borderRadius: "10px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  background:
+                    "linear-gradient(135deg, rgba(212,175,55,0.28) 0%, rgba(212,175,55,0.10) 100%)",
+                  border: "1px solid rgba(212,175,55,0.38)",
+                  boxShadow: "inset 0 1px 0 rgba(255,255,255,0.18)",
+                  flexShrink: 0,
+                }}
+              >
+                <GraduationCap size={16} color="#D4AF37" strokeWidth={2} />
+              </div>
+              <span
+                style={{
+                  fontSize: "14px",
+                  fontWeight: 600,
+                  color: "rgba(255,255,255,0.90)",
+                }}
+              >
+                SorSU–Bulan{" "}
+                <span style={{ color: "#D4AF37", fontWeight: 700 }}>GWA</span>
+              </span>
+            </div>
+
+            {/* Desktop nav links (md and up) */}
+            <nav
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "4px",
+              }}
+              className="desktop-nav"
+            >
+              {links.map(({ href, label, Icon }) => {
+                const active = path === href;
+                return (
+                  <Link
+                    key={href}
+                    href={href}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "6px",
+                      padding: "7px 16px",
+                      borderRadius: "99px",
+                      fontSize: "13px",
+                      fontWeight: 500,
+                      textDecoration: "none",
+                      transition: "all 0.2s ease",
+                      background: active
+                        ? "rgba(255,255,255,0.12)"
+                        : "transparent",
+                      color: active ? "#fff" : "rgba(255,255,255,0.50)",
+                      border: active
+                        ? "1px solid rgba(255,255,255,0.14)"
+                        : "1px solid transparent",
+                    }}
+                  >
+                    <Icon
+                      size={13}
+                      color={active ? "#D4AF37" : "rgba(255,255,255,0.40)"}
+                      strokeWidth={active ? 2.5 : 2}
+                    />
+                    {label}
+                  </Link>
+                );
+              })}
+            </nav>
+          </div>
+        </header>
+      </div>
 
       {/* ── Mobile bottom glass pill ── */}
       <div

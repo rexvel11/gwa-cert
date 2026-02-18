@@ -123,7 +123,7 @@ export default function RootLayout({
               padding: "32px 0 24px",
             }}
           >
-            Developed by pagod-na-pogi
+            Developer: riksknot
           </footer>
 
           {/* Extra space on mobile so footer text isn't hidden behind the pill nav */}
