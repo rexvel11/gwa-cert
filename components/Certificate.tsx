@@ -79,9 +79,7 @@ const Certificate = forwardRef<HTMLDivElement, Props>(
             textTransform: "uppercase",
             color: "rgba(255,255,255,0.72)",
           }}
-        >
-          Republic of the Philippines
-        </div>
+        ></div>
 
         {/* SORSOGON STATE UNIVERSITY – BULAN CAMPUS */}
         <div

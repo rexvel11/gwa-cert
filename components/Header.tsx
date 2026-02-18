@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { GraduationCap } from "lucide-react";
 
 export default function Header() {
   return (
@@ -27,7 +27,7 @@ export default function Header() {
             animation: "pulse-ring 2.8s ease-in-out infinite",
           }}
         />
-        {/* Glass circle with logo */}
+        {/* Glass circle with GraduationCap icon */}
         <div
           style={{
             position: "relative",
@@ -38,24 +38,17 @@ export default function Header() {
             alignItems: "center",
             justifyContent: "center",
             background:
-              "linear-gradient(145deg, rgba(123,17,19,0.80) 0%, rgba(80,12,14,0.65) 100%)",
+              "linear-gradient(135deg, rgba(212,175,55,0.28) 0%, rgba(212,175,55,0.10) 100%)",
             backdropFilter: "blur(16px)",
             WebkitBackdropFilter: "blur(16px)",
-            border: "1px solid rgba(212,175,55,0.40)",
+            border: "1px solid rgba(212,175,55,0.38)",
             borderTopColor: "rgba(212,175,55,0.60)",
             boxShadow:
-              "0 12px 40px rgba(123,17,19,0.60), inset 0 1px 0 rgba(255,255,255,0.20), inset 0 -1px 0 rgba(0,0,0,0.28)",
+              "0 12px 40px rgba(123,17,19,0.60), inset 0 1px 0 rgba(255,255,255,0.18), inset 0 -1px 0 rgba(0,0,0,0.28)",
             overflow: "hidden",
           }}
         >
-          <Image
-            src="/logo.png"
-            alt="SSU Bulan Logo"
-            width={68}
-            height={68}
-            style={{ objectFit: "contain" }}
-            priority
-          />
+          <GraduationCap size={44} color="#D4AF37" strokeWidth={1.5} />
         </div>
       </div>
 
@@ -73,10 +66,7 @@ export default function Header() {
             fontWeight: 500,
             margin: 0,
           }}
-        >
-          Republic of the Philippines
-        </p>
-
+        ></p>
         <h1
           style={{
             fontSize: "clamp(18px, 4vw, 22px)",
@@ -93,7 +83,6 @@ export default function Header() {
             – Bulan Campus
           </span>
         </h1>
-
         <h2
           className="text-gold-shimmer anim-fade-up d-3"
           style={{
@@ -105,7 +94,6 @@ export default function Header() {
         >
           GWA Calculator
         </h2>
-
         <p
           className="anim-fade-up d-4"
           style={{
