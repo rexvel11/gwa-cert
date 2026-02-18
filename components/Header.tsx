@@ -117,7 +117,7 @@ export default function Header() {
             margin: 0,
           }}
         >
-          Exclusive for close friends only.
+          Bored lang po hehe :3
         </p>
       </div>
 

@@ -78,7 +78,7 @@ export default function AboutPage() {
               marginTop: "6px",
             }}
           >
-            SSU–Bulan GWA Calculator
+            SorSU–Bulan GWA Calculator
           </p>
         </div>
 
@@ -121,8 +121,7 @@ export default function AboutPage() {
           >
             This tool helps students of Sorsogon State University – Bulan Campus
             compute their General Weighted Average and determine academic
-            distinctions. It also generates a downloadable certificate image
-            matching the official template.
+            distinctions. It also generates a downloadable certificate image.
           </p>
         </div>
 

@@ -9,7 +9,7 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "SSU-Bulan GWA Calculator",
+  title: "SorSU-Bulan GWA Calculator",
   description: "GWA Calculator — Sorsogon State University Bulan Campus",
   icons: {
     icon: "/logo.png",
@@ -123,7 +123,7 @@ export default function RootLayout({
               padding: "32px 0 24px",
             }}
           >
-            Developed by pagodnapogi
+            Developed by pagod-na-pogi
           </footer>
 
           {/* Extra space on mobile so footer text isn't hidden behind the pill nav */}

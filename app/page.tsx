@@ -12,7 +12,13 @@ import { v4 as uuidv4 } from "uuid";
 import Header from "@/components/Header";
 import SubjectRow from "@/components/SubjectRow";
 import ResultModal from "@/components/ResultModal";
-import { Subject, calculateGWA, getDistinction } from "@/lib/gwa";
+import {
+  Subject,
+  calculateGWA,
+  getDistinction,
+  Program,
+  PROGRAMS,
+} from "@/lib/gwa";
 
 const SEMESTERS = ["1st Sem", "2nd Sem"];
 const SCHOOL_YEARS = [
@@ -44,11 +50,6 @@ function GlassSelect({
   const [rect, setRect] = useState<DOMRect | null>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const calcRect = useCallback(() => {
     if (triggerRef.current) setRect(triggerRef.current.getBoundingClientRect());
@@ -81,7 +82,7 @@ function GlassSelect({
     };
   }, [open, calcRect]);
 
-  const portalContent = rect && (
+  const portalContent = open && rect && (
     <div
       ref={dropdownRef}
       style={{
@@ -199,7 +200,216 @@ function GlassSelect({
         />
       </button>
 
-      {mounted && open && createPortal(portalContent, document.body)}
+      {typeof window !== "undefined" &&
+        createPortal(portalContent, document.body)}
+    </div>
+  );
+}
+
+// ─── Program dropdown with disabled department headers ────────────────────
+function ProgramSelect({
+  value,
+  onChange,
+}: {
+  value: Program | null;
+  onChange: (p: Program) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const [rect, setRect] = useState<DOMRect | null>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const calcRect = useCallback(() => {
+    if (triggerRef.current) setRect(triggerRef.current.getBoundingClientRect());
+  }, []);
+
+  useLayoutEffect(() => {
+    if (open) calcRect();
+  }, [open, calcRect]);
+
+  useEffect(() => {
+    if (!open) return;
+    const onDown = (e: MouseEvent) => {
+      if (
+        triggerRef.current?.contains(e.target as Node) ||
+        dropdownRef.current?.contains(e.target as Node)
+      )
+        return;
+      setOpen(false);
+    };
+    const onScroll = () => calcRect();
+    document.addEventListener("mousedown", onDown);
+    window.addEventListener("scroll", onScroll, true);
+    window.addEventListener("resize", calcRect);
+    return () => {
+      document.removeEventListener("mousedown", onDown);
+      window.removeEventListener("scroll", onScroll, true);
+      window.removeEventListener("resize", calcRect);
+    };
+  }, [open, calcRect]);
+
+  const displayText = value
+    ? `${value.code} - ${value.name}`
+    : "Select your program";
+
+  const portalContent = open && rect && (
+    <div
+      ref={dropdownRef}
+      style={{
+        position: "fixed",
+        top: rect.bottom + 6,
+        left: rect.left,
+        width: rect.width,
+        zIndex: 99999,
+        borderRadius: "16px",
+        overflow: "hidden",
+        maxHeight: "320px",
+        overflowY: "auto",
+        background:
+          "linear-gradient(160deg, rgba(28,14,15,0.98) 0%, rgba(18,8,9,0.99) 100%)",
+        backdropFilter: "blur(32px) saturate(180%)",
+        WebkitBackdropFilter: "blur(32px) saturate(180%)",
+        border: "1px solid rgba(255,255,255,0.13)",
+        borderTopColor: "rgba(255,255,255,0.22)",
+        boxShadow:
+          "0 16px 48px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.09)",
+      }}
+    >
+      {PROGRAMS.map((prog) => {
+        const selected = value?.code === prog.code;
+        const isHeader = prog.isHeader;
+
+        return (
+          <button
+            key={prog.code}
+            disabled={isHeader}
+            onMouseDown={(e) => {
+              if (isHeader) return;
+              e.preventDefault();
+              onChange(prog);
+              setOpen(false);
+            }}
+            style={{
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              padding: isHeader ? "9px 16px" : "11px 16px 11px 28px",
+              fontSize: isHeader ? "10px" : "12px",
+              fontWeight: isHeader ? 800 : selected ? 700 : 500,
+              fontFamily: "inherit",
+              color: isHeader
+                ? "rgba(212,175,55,0.70)"
+                : selected
+                  ? "#D4AF37"
+                  : "rgba(255,255,255,0.75)",
+              background: isHeader
+                ? "rgba(212,175,55,0.08)"
+                : selected
+                  ? "rgba(212,175,55,0.10)"
+                  : "transparent",
+              border: "none",
+              borderBottom: "1px solid rgba(255,255,255,0.06)",
+              cursor: isHeader ? "default" : "pointer",
+              textAlign: "left",
+              transition: "all 0.15s ease",
+              letterSpacing: isHeader ? "0.18em" : "normal",
+              textTransform: isHeader
+                ? ("uppercase" as const)
+                : ("none" as const),
+              opacity: isHeader ? 1 : undefined,
+            }}
+            onMouseEnter={(e) => {
+              if (!selected && !isHeader) {
+                e.currentTarget.style.background = "rgba(255,255,255,0.06)";
+                e.currentTarget.style.color = "#fff";
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (!selected && !isHeader) {
+                e.currentTarget.style.background = "transparent";
+                e.currentTarget.style.color = "rgba(255,255,255,0.75)";
+              }
+            }}
+          >
+            <span
+              style={{
+                flex: 1,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {isHeader ? prog.name : `${prog.code} - ${prog.name}`}
+            </span>
+            {selected && !isHeader && (
+              <Check size={13} color="#D4AF37" strokeWidth={2.5} />
+            )}
+          </button>
+        );
+      })}
+    </div>
+  );
+
+  return (
+    <div style={{ position: "relative" }}>
+      <button
+        ref={triggerRef}
+        onClick={() => {
+          calcRect();
+          setOpen((o) => !o);
+        }}
+        style={{
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: "12px 16px",
+          borderRadius: "16px",
+          fontSize: "13px",
+          fontWeight: 500,
+          fontFamily: "inherit",
+          color: value ? "#fff" : "rgba(255,255,255,0.40)",
+          textAlign: "left",
+          cursor: "pointer",
+          transition: "all 0.20s ease",
+          background: open
+            ? "linear-gradient(135deg, rgba(255,255,255,0.13) 0%, rgba(255,255,255,0.08) 100%)"
+            : "linear-gradient(135deg, rgba(255,255,255,0.09) 0%, rgba(255,255,255,0.05) 100%)",
+          border: open
+            ? "1px solid rgba(212,175,55,0.60)"
+            : "1px solid rgba(255,255,255,0.14)",
+          borderTopColor: open
+            ? "rgba(212,175,55,0.80)"
+            : "rgba(255,255,255,0.22)",
+          boxShadow: open
+            ? "0 0 0 3px rgba(212,175,55,0.12), 0 1px 0 rgba(255,255,255,0.08) inset"
+            : "0 1px 0 rgba(255,255,255,0.06) inset, 0 2px 8px rgba(0,0,0,0.20)",
+        }}
+      >
+        <span
+          style={{
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+          }}
+        >
+          {displayText}
+        </span>
+        <ChevronDown
+          size={14}
+          color="rgba(212,175,55,0.65)"
+          strokeWidth={2.5}
+          style={{
+            transition: "transform 0.20s ease",
+            transform: open ? "rotate(180deg)" : "rotate(0deg)",
+            flexShrink: 0,
+          }}
+        />
+      </button>
+
+      {typeof window !== "undefined" &&
+        createPortal(portalContent, document.body)}
     </div>
   );
 }
@@ -219,6 +429,7 @@ export default function Home() {
   const [subjects, setSubjects] = useState<Subject[]>(freshSubjects());
   const [semester, setSemester] = useState(SEMESTERS[0]);
   const [schoolYear, setSchoolYear] = useState(SCHOOL_YEARS[3]);
+  const [program, setProgram] = useState<Program | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [gwa, setGwa] = useState(0);
 
@@ -237,6 +448,10 @@ export default function Home() {
       alert("Please enter at least one subject with a grade and units.");
       return;
     }
+    if (!program) {
+      alert("Please select your program.");
+      return;
+    }
     setGwa(calculateGWA(valid));
     setModalOpen(true);
   };
@@ -245,6 +460,7 @@ export default function Home() {
     setModalOpen(false);
     setTimeout(() => {
       setSubjects(freshSubjects());
+      setProgram(null); // ← Reset program dropdown to default
       setGwa(0);
     }, 300);
   };
@@ -276,6 +492,7 @@ export default function Home() {
               display: "grid",
               gridTemplateColumns: "1fr 1fr",
               gap: "14px",
+              marginBottom: "14px",
             }}
           >
             <div>
@@ -296,6 +513,12 @@ export default function Home() {
                 label="School Year"
               />
             </div>
+          </div>
+
+          {/* Program dropdown — full width */}
+          <div>
+            <label style={labelStyle}>Program</label>
+            <ProgramSelect value={program} onChange={setProgram} />
           </div>
         </div>
 
@@ -475,6 +698,7 @@ export default function Home() {
         distinction={getDistinction(gwa)}
         semester={semester}
         schoolYear={schoolYear}
+        program={program}
       />
     </main>
   );

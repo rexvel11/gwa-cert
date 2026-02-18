@@ -1,7 +1,7 @@
 "use client";
 import { useState, useRef, useCallback } from "react";
 import { X, Download, Trophy, Star, Sparkles, AlertCircle } from "lucide-react";
-import { AcademicDistinction } from "@/lib/gwa";
+import { AcademicDistinction, Program } from "@/lib/gwa";
 import Certificate from "./Certificate";
 
 type Props = {
@@ -11,6 +11,7 @@ type Props = {
   distinction: AcademicDistinction;
   semester: string;
   schoolYear: string;
+  program: Program | null;
 };
 
 export default function ResultModal({
@@ -20,6 +21,7 @@ export default function ResultModal({
   distinction,
   semester,
   schoolYear,
+  program,
 }: Props) {
   const [name, setName] = useState("");
   const [showCert, setShowCert] = useState(false);
@@ -222,7 +224,7 @@ export default function ResultModal({
                   letterSpacing: "-2px",
                 }}
               >
-                {gwa.toFixed(4)}
+                {gwa.toFixed(2)}
               </div>
             </div>
 
@@ -340,7 +342,7 @@ export default function ResultModal({
       </div>
 
       {/* Off-screen certificate */}
-      {showCert && distinction && (
+      {showCert && distinction && program && (
         <div style={{ position: "fixed", top: -9999, left: -9999 }}>
           <Certificate
             ref={certRef}
@@ -349,6 +351,7 @@ export default function ResultModal({
             distinction={distinction}
             semester={semester}
             schoolYear={schoolYear}
+            program={program}
           />
         </div>
       )}

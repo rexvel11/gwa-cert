@@ -59,7 +59,7 @@ export default function Navbar() {
                 color: "rgba(255,255,255,0.90)",
               }}
             >
-              SSU–Bulan{" "}
+              SorSU–Bulan{" "}
               <span style={{ color: "#D4AF37", fontWeight: 700 }}>GWA</span>
             </span>
           </div>

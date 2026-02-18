@@ -1,6 +1,6 @@
 "use client";
 import React, { forwardRef } from "react";
-import { AcademicDistinction } from "@/lib/gwa";
+import { AcademicDistinction, Program } from "@/lib/gwa";
 
 type Props = {
   name: string;
@@ -8,6 +8,7 @@ type Props = {
   distinction: AcademicDistinction;
   semester: string;
   schoolYear: string;
+  program: Program;
 };
 
 // The background image (cert-bg.png) is 2000×1414px.
@@ -15,7 +16,7 @@ type Props = {
 // All absolute positions below are calibrated to this 1000×707 canvas.
 
 const Certificate = forwardRef<HTMLDivElement, Props>(
-  ({ name, gwa, distinction, semester, schoolYear }, ref) => {
+  ({ name, gwa, distinction, semester, schoolYear, program }, ref) => {
     const today = new Date();
     const dateStr = today.toLocaleDateString("en-US", {
       day: "numeric",
@@ -232,7 +233,7 @@ const Certificate = forwardRef<HTMLDivElement, Props>(
           {semester} A.Y. {schoolYear}
         </div>
 
-        {/* Body paragraph */}
+        {/* Body paragraph — now uses selected program */}
         <div
           style={{
             position: "absolute",
@@ -247,12 +248,12 @@ const Certificate = forwardRef<HTMLDivElement, Props>(
             lineHeight: 1.65,
           }}
         >
-          For his/her exemplary performance in academic endeavors in the course
-          Bachelor of Science in Information Technology (BSIT). Awarded this{" "}
-          {dateStr} at Sorsogon State University, Bulan Campus, Bulan, Sorsogon.
+          For his/her exemplary performance in academic endeavors in the course{" "}
+          {program.name} ({program.code}). Awarded this {dateStr} at Sorsogon
+          State University, Bulan Campus, Bulan, Sorsogon.
         </div>
 
-        {/* ── GWA — bottom right ── */}
+        {/* ── GWA — bottom right — now shows 1.00 format ── */}
         <div
           style={{
             position: "absolute",
@@ -284,7 +285,7 @@ const Certificate = forwardRef<HTMLDivElement, Props>(
               lineHeight: 1,
             }}
           >
-            {gwa.toFixed(4)}
+            {gwa.toFixed(2)}
           </div>
         </div>
       </div>
